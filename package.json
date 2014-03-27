@@ -1,7 +1,7 @@
 {
   "name": "strait",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Rafael Macedo",
   "repository": {
     "type": "git",
@@ -13,10 +13,6 @@
   },
   "engines": {
     "node": "~0.10.26"
-  },
-  "scripts": {
-    "postinstall": "sudo make postinstall"
-    "postuninstall": "sudo make postuninstall"
   },
   "dependencies": {
     "create-singleton": "~0.0.3",
