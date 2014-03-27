@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+PIDS_PATH="/var/run/strait"
+
+if [ -d $PIDS_PATH ]; then
+  rm -rf $PIDS_PATH
+  echo "ok"
+else
+  echo "nothing to do..."
+fi

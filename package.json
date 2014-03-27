@@ -14,6 +14,10 @@
   "engines": {
     "node": "~0.10.26"
   },
+  "scripts": {
+    "postinstall": "sudo make postinstall"
+    "postuninstall": "sudo make postuninstall"
+  },
   "dependencies": {
     "create-singleton": "~0.0.3",
     "commander": "~2.1.0",
