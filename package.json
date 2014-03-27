@@ -1,0 +1,29 @@
+{
+  "name": "strait",
+  "description": "",
+  "version": "0.0.1",
+  "author": "Rafael Macedo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaelmacedo/strait"
+  },
+  "main": "./lib/main",
+  "bin": {
+    "strait": "./bin/strait"
+  },
+  "engines": {
+    "node": "~0.10.26"
+  },
+  "dependencies": {
+    "create-singleton": "~0.0.3",
+    "commander": "~2.1.0",
+    "daemonize2": "~0.4.2",
+    "ws": "~0.4.31"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1",
+    "sinon": "~1.9.0",
+    "sinon-chai": "~2.5.0"
+  }
+}

@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+var Commander = require("../lib/commander");
+
+try {
+  switch(process.argv[2]) {
+    case "start":
+      var source_arg = Commander.args[1]
+        , target_arg = Commander.args[2];
+
+      if (! /(:)?([0-9]{1,5})/g.test(source_arg)) { throw "illegal source"; }
+      if (! /(.):([0-9]{1,5})/g.test(target_arg)) { throw "illegal target"; }
+
+      if (Commander.daemon) {
+        var Daemon = require("daemonize2").setup({
+          main:    "../lib/main.js",
+          name:    "strait " + process.argv.slice(3).join(" "),
+          pidfile: "/var/run/strait/" + source_arg + ".pid",
+        });
+
+        Daemon.start();
+      } else {
+        var main = require("../lib/main");
+      }
+      break;
+
+    default:
+      Commander.help();
+  }
+
+} catch(e) {
+  console.log(e);
+  Commander.help();
+  process.exit(2);
+}
