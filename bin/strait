@@ -7,7 +7,7 @@ try {
     var Daemon = require("daemonize2").setup({
       main:    "../lib/main.js",
       name:    "strait " + process.argv.slice(2).join(" "),
-      pidfile: "/var/run/strait/" + source_arg + ".pid",
+      pidfile: "/var/run/strait/" + process.argv.slice(-2).join("_") + ".pid",
     });
 
     Daemon.start();
