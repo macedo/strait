@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
   require("time-grunt")(grunt);
   require("load-grunt-tasks")(grunt);
-
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
     bower: {
@@ -27,6 +26,10 @@ module.exports = function(grunt) {
             jquery: {
               path: "client/requires/jquery/javascripts/jquery.js",
               exports: "$"
+            },
+            stateMachine: {
+              path: "client/requires/javascript-state-machine/javascripts/state-machine.js",
+              exports: "StateMachine"
             },
             underscore: {
               path: "client/requires/underscore/javascripts/underscore.js",
@@ -83,69 +86,31 @@ module.exports = function(grunt) {
         ]
       }
     },
-    watch: {
-      scripts: {
-        files: ["client/templates/*.hbs", "client/src/**/*.js"],
-        tasks: ["clean:dev", "browserify:app", "concat", "copy:dev"]
-      }
-      test: {
-        files: ["build/application.js", "client/spec/**/*.test.js"],
-        tasks: ["browserify:test"]
-      },
-      karma: {
-        files: ["build/tests.js"],
-        tasks: ["jshint:test", "karma:watcher:run"]
-      }
-    },
-    nodemon: {
-      dev: {
-        options: {
-          file: "strait_web.js",
-          nodeArgs: ["--debug"],
-          watchedFolders: ["controllers", "app"],
-          env: {
-            PORT: "3300"
-          }
-        }
-      }
-    },
-    concurrent: {
-      dev: {
-        tasks: ["nodemon:dev", "watch:scripts", "watch:test"],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      test: {
-        tasks: ["watch:karma"],
-        options: {
-          logConcurrentOutput: true
-        }
-      }
-    },
-    karma: {
-      options: {
-        configFile: "karma.conf.js"
-      },
-      watcher: {
-        background: true,
-        singleRun: false
-      },
-      test: {
-        singleRun: true
-      }
-    },
     jshint: {
       all: ["Gruntfile.js", "client/src/**/*.js", "client/spec/**/*.js"],
       dev: ["client/src/**/*.js"],
-      test: ["client/spec/**/*.js"]
+      test: ["client/spec/**/*.js"],
+      options: {
+        laxcomma: true
+      }
+    },
+    "mocha-chai-sinon": {
+      build: {
+        src: ["client/specs/*.test.js"],
+        options: {
+          ui: "bdd",
+          reporter: "spec"
+        }
+      }
     }
   });
+
+  grunt.loadNpmTasks("grunt-mocha-chai-sinon");
 
   grunt.registerTask("init:dev", ["clean", "bower", "browserify:vendor"]);
   grunt.registerTask("build:dev", [
       "clean:dev", "browserify:app", "browserify:test",
       "jshint:dev", "concat", "copy:dev"]);
-  grunt.registerTask("server", ["build:dev", "concurrent:dev"]);
-  grunt.registerTask("test", ["karma:test"]);
+  grunt.registerTask("server", ["build:dev"]);
+  grunt.registerTask("test", ["mocha-chai-sinon"]);
 };
