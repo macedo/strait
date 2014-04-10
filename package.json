@@ -7,10 +7,6 @@
     "type": "git",
     "url": "https://github.com/rafaelmacedo/strait"
   },
-  "main": "./lib/main",
-  "bin": {
-    "strait": "./bin/strait"
-  },
   "engines": {
     "node": "~0.10.26"
   },
