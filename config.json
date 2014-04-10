@@ -1,12 +1,4 @@
 {
-  "pool": {
-    "size": 10,
-    "offset": 5000
-  },
-  "proxyServer": {
-    "cert": "",
-    "timeout": 5000,
-    "idle_timeout": 10000,
-    "daemonize": true
-  }
+  "port": 3000,
+  "secret": "asd"
 }
