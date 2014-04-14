@@ -2,5 +2,5 @@ bower_components
 build
 client/requires/**
 node_modules
-publics/javascripts/*.js
-publics/stylesheets/*.css
+public/javascripts/*.js
+public/stylesheets/*.css
