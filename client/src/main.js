@@ -1,6 +1,5 @@
-var $   = require("jquery")
-  , App = require("./app")
-  , app = new App();
+var App      = require("./app")
+  , app      = new App();
 
 
-$(function() { app.init(); });
+$(function() { app.init("#strait"); });

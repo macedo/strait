@@ -1,5 +1,11 @@
-module.exports = App = function App() {};
+var Backbone = require("backbone")
+  , AppView  = require("./views/app");
 
-App.prototype.init = function() {
-  console.log("aqui");
+
+module.exports = App = function App() {
+  this.view = new AppView();
+};
+
+App.prototype.init = function(element) {
+  $(element).append(this.view.render().el);
 };
