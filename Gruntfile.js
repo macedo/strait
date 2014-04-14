@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       vendor: {
-        src: ["client/requires/**/*.js"],
+        src: ["client/requires/**/javascripts/*.js"],
         dest: "build/vendor.js",
         options: {
           shim: {
@@ -27,14 +27,19 @@ module.exports = function(grunt) {
               path: "client/requires/jquery/javascripts/jquery.js",
               exports: "$"
             },
-            stateMachine: {
-              path: "client/requires/javascript-state-machine/javascripts/state-machine.js",
-              exports: "StateMachine"
-            },
             underscore: {
               path: "client/requires/underscore/javascripts/underscore.js",
               exports: "_"
+            },
+            backbone: {
+              path: "client/requires/backbone/javascripts/backbone.js",
+              exports: "Backbone",
+              depends: {
+                jquery: "jquery",
+                underscore: "underscore"
+              }
             }
+
           }
         }
       },
@@ -44,18 +49,7 @@ module.exports = function(grunt) {
         },
         options: {
           transform: ["hbsfy"],
-          external: ["jquery", "underscore"]
-        }
-      },
-      test: {
-        files: {
-          "build/tests.js": [
-            "client/spec/**/*.test.js"
-          ]
-        },
-        options: {
-          transform: ["hbsfy"],
-          external: ["jquery", "underscore"]
+          external: ["jquery", "underscore", "backbone"]
         }
       }
     },
@@ -72,20 +66,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-    uglify: {
-      compile: {
-        options: {
-          compress: true,
-          verbose: true
-        },
-        files: [
-          {
-            src: "build/<%= pkg.name %>.js",
-            dest: "dist/js/<%= pkg.name %>.js"
-          }
-        ]
-      }
-    },
     jshint: {
       all: ["Gruntfile.js", "client/src/**/*.js", "client/spec/**/*.js"],
       dev: ["client/src/**/*.js"],
@@ -93,24 +73,11 @@ module.exports = function(grunt) {
       options: {
         laxcomma: true
       }
-    },
-    "mocha-chai-sinon": {
-      build: {
-        src: ["client/specs/*.test.js"],
-        options: {
-          ui: "bdd",
-          reporter: "spec"
-        }
-      }
     }
   });
 
-  grunt.loadNpmTasks("grunt-mocha-chai-sinon");
-
   grunt.registerTask("init:dev", ["clean", "bower", "browserify:vendor"]);
   grunt.registerTask("build:dev", [
-      "clean:dev", "browserify:app", "browserify:test",
-      "jshint:dev", "concat", "copy:dev"]);
+      "clean:dev", "browserify:app", "jshint:dev", "concat", "copy:dev"]);
   grunt.registerTask("server", ["build:dev"]);
-  grunt.registerTask("test", ["mocha-chai-sinon"]);
 };
