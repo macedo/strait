@@ -1,11 +1,4 @@
-var Backbone = require("backbone")
-  , AppView  = require("./views/app");
+var App = require("./app/main")
+  , app = new App();
 
-
-module.exports = App = function App() {
-  this.view = new AppView();
-};
-
-App.prototype.init = function(element) {
-  $(element).append(this.view.render().el);
-};
+$(function() { app.init(); });

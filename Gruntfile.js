@@ -45,7 +45,16 @@ module.exports = function(grunt) {
       },
       app: {
         files: {
-          "build/application.js": ["client/src/main.js"]
+          "build/application.js": ["client/src/app.js"]
+        },
+        options: {
+          transform: ["hbsfy"],
+          external: ["jquery", "underscore", "backbone"]
+        }
+      },
+      embed: {
+        files: {
+          "build/application_embed.js": ["client/src/embed.js"]
         },
         options: {
           transform: ["hbsfy"],
@@ -54,7 +63,8 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-      "build/<%= pkg.name %>.js": ["build/vendor.js", "build/application.js"]
+      "build/<%= pkg.name %>.js": ["build/vendor.js", "build/application.js"],
+      "build/<%= pkg.name %>.embed.js": ["build/vendor.js", "build/application_embed.js"]
     },
     copy: {
       dev: {
@@ -62,6 +72,10 @@ module.exports = function(grunt) {
           {
             src: "build/<%= pkg.name %>.js",
             dest: "public/javascripts/<%= pkg.name %>.js"
+          },
+          {
+            src: "build/<%= pkg.name %>.embed.js",
+            dest: "public/javascripts/<%= pkg.name %>.embed.js"
           }
         ]
       }
@@ -78,6 +92,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask("init:dev", ["clean", "bower", "browserify:vendor"]);
   grunt.registerTask("build:dev", [
-      "clean:dev", "browserify:app", "jshint:dev", "concat", "copy:dev"]);
+      "clean:dev", "browserify:app", "browserify:embed", "jshint:dev", "concat", "copy:dev"]);
   grunt.registerTask("server", ["build:dev"]);
 };
