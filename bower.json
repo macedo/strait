@@ -5,7 +5,8 @@
   "dependencies": {
     "jquery": "~1.10.2",
     "underscore": "~1.6.0",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "string": "1.8.0"
   },
   "exportsOverride": {
     "jquery": {
@@ -16,6 +17,9 @@
     },
     "backbone": {
       "javascripts": "backbone.js"
+    },
+    "string": {
+      "javascripts": "lib/string.js"
     }
   }
 }

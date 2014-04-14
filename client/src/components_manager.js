@@ -28,12 +28,13 @@ ComponentsManager.prototype.fetchComponents = function(container) {
 ComponentsManager.prototype.initializeComponent = function(container, name) {
   var newComponent;
   try {
-    var component = require(name);
+    var component = require("./app/strait_viewer");
     newComponent = component.init(container);
   } catch(err) {
+    console.log(err);
     newComponent = void 0;
   }
-  return newObject;
+  return newComponent;
 };
 
 ComponentsManager.prototype.onComponentsLoaded = function(event, element) {

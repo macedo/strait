@@ -38,8 +38,11 @@ module.exports = function(grunt) {
                 jquery: "jquery",
                 underscore: "underscore"
               }
+            },
+            string: {
+              path: "client/requires/string/javascripts/string.js",
+              exports: "String"
             }
-
           }
         }
       },
@@ -49,7 +52,7 @@ module.exports = function(grunt) {
         },
         options: {
           transform: ["hbsfy"],
-          external: ["jquery", "underscore", "backbone"]
+          external: ["jquery", "underscore", "backbone", "string"]
         }
       },
       embed: {
@@ -58,7 +61,7 @@ module.exports = function(grunt) {
         },
         options: {
           transform: ["hbsfy"],
-          external: ["jquery", "underscore", "backbone"]
+          external: ["jquery", "underscore", "backbone", "string"]
         }
       }
     },

@@ -5,7 +5,7 @@ module.exports = AppView = Backbone.View.extend({
   tagName: "iframe",
 
   attributes: {
-    "src": "http://globo.com"
+    "src": "http://localhost:3000"
   },
 
   render: function() {
