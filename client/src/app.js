@@ -1,6 +1,3 @@
-var Mediator          = require("./mediator")
-  , ComponentsManager = require("./components_manager").init(Mediator)
-  , App               = require("./app/main")
-  , app               = new App();
+var StraitViewer = require("./app/strait_viewer");
 
-$(function() { app.init(); });
+$(function() { StraitViewer.init("#strait"); });

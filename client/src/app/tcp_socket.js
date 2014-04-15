@@ -2,7 +2,7 @@ var TCPUtil = { };
 TCPUtil.prepareForTransmit = JSON.stringify;
 TCPUtil.cleanFromTransmit  = JSON.parse;
 
-module.exports = TCPClient = function TCPClient(host, port, passwd) {
+module.exports = TCPSocket = function TCPSocket(host, port, passwd) {
   this.host = host;
   this.port = port;
   this.password = passwd;
@@ -13,7 +13,7 @@ module.exports = TCPClient = function TCPClient(host, port, passwd) {
   this.callbacks = {};
 };
 
-TCPClient.prototype = {
+TCPSocket.prototype = {
   emit: function(event, param) {
     if (typeof this.callbacks[event] === "function")
       this.callbacks[event].call(this, param);
@@ -51,8 +51,8 @@ TCPClient.prototype = {
         _this.connectedToSocket = true;
         _this.socket.send(TCPUtil.prepareForTransmit({
           action: "connect",
-          host: this.host,
-          port: this.port
+          host: _this.host,
+          port: _this.port
         }));
       })
       .on("disconnect", function() {

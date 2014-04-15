@@ -34,5 +34,3 @@ io.sockets.on("connection", function(client) {
   console.log("new connection");
   new Strait(client, "binary");
 });
-
-util.log("Server is listening on localhost:" + config.port);
