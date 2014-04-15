@@ -8,75 +8,76 @@ module.exports = TCPClient = function TCPClient(host, port, passwd) {
   this.password = passwd;
 
   this.connectedToSocket = false; // are we connected to socketio
-  this.connected = false;           // do we have a connection to the TCP endpoint
+  this.connected = false;         // do we have a connection to the TCP endpoint
 
   this.callbacks = {};
 };
 
-TCPClient.prototype.emit = function(event, param) {
-  if (typeof this._callbacks[event] === "function")
-    this.callbacks[event].call(this, param);
-};
+TCPClient.prototype = {
+  emit: function(event, param) {
+    if (typeof this.callbacks[event] === "function")
+      this.callbacks[event].call(this, param);
+  },
 
-TCPClient.prototype.on = function(event, callback) {
-  if (typeof callback === "function")
-    this.callbacks[event] = callback;
-  return this;
-};
+  on: function(event, callback) {
+    if (typeof callback === "function")
+      this.callbacks[event] = callback;
+    return this;
+  },
 
-TCPClient.prototype.disconnect = function() {
-  if (this.connectedToSocket)
-    this._socket.send(TCPUtil.prepareForTransmit({action: "disconnect"}));
-};
+  disconnect: function() {
+    if (this.connectedToSocket)
+      this._socket.send(TCPUtil.prepareForTransmit({action: "disconnect"}));
+  },
 
-TCPClient.prototype.send = function(data, encoding) {
-  if (this.connectedToSocket && this.connected){
-    this.socket.send(TCPUtil.prepareForTransmit({
-      action: "data",
-      encoding: encoding || "utf8",
-      data: data
-    }));
-  }
-};
-
-TCPClient.prototype.connect = function() {
-  var _this = this;
-
-  if (typeof this.socket === "undefined" || this.socket === null)
-    this.socket = io.connect("http://localhost:3000");
-
-
-  this.socket
-    .on("connect", function(){
-      _this.connectedToSocket = true;
-      _this.socket.send(TCPUtil.prepareForTransmit({
-        action: "connect",
-        host: this.host,
-        port: this.port
+  send: function(data, encoding) {
+    if (this.connectedToSocket && this.connected)
+      this.socket.send(TCPUtil.prepareForTransmit({
+        action: "data",
+        encoding: encoding || "utf8",
+        data: data
       }));
-    })
-    .on("disconnect", function() {
-      _this.connectedToSocket = false;
-      _this.connected = false;
-      _this.emit("error", "The socket io connection was lost");
-    })
-    .on("message", function(message) {
-      message = TCPUtil.cleanFromTransmit(message);
-      switch(message.action){
-        case "connected":
-          _this.connected = true;
-          _this.emit("connected");
-          break;
-        case "data":
-          _this.emit("data", { encoding: message.encoding, data: message.data });
-          break;
-        case "closed":
-          _this.connected = false;
-          _this.emit("closed");
-          break;
-        default:
-      }
-    });
+  },
 
-  return this;
+  connect: function() {
+    var _this = this;
+
+    if (typeof this.socket === "undefined" || this.socket === null)
+      this.socket = io.connect("http://localhost:3000");
+
+
+    this.socket
+      .on("connect", function(){
+        _this.connectedToSocket = true;
+        _this.socket.send(TCPUtil.prepareForTransmit({
+          action: "connect",
+          host: this.host,
+          port: this.port
+        }));
+      })
+      .on("disconnect", function() {
+        _this.connectedToSocket = false;
+        _this.connected = false;
+        _this.emit("error", "The socket io connection was lost");
+      })
+      .on("message", function(message) {
+        message = TCPUtil.cleanFromTransmit(message);
+        switch(message.action){
+          case "connected":
+            _this.connected = true;
+            _this.emit("connected");
+            break;
+          case "data":
+            _this.emit("data", { encoding: message.encoding, data: message.data });
+            break;
+          case "closed":
+            _this.connected = false;
+            _this.emit("closed");
+            break;
+          default:
+        }
+      });
+
+    return this;
+  }
 };

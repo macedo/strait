@@ -8,6 +8,8 @@ StraitViewer.init = function(container) {
   return instance;
 };
 
-StraitViewer.prototype.init = function() {
-  console.log("initialize strait viewer");
+StraitViewer.prototype = {
+  init: function() {
+    console.log("initialize strait viewer");
+  }
 };
