@@ -17,7 +17,6 @@ module.exports = AppView = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html();
     return this;
   }
 });

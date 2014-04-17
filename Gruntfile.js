@@ -88,7 +88,8 @@ module.exports = function(grunt) {
       dev: ["client/src/**/*.js"],
       test: ["client/spec/**/*.js"],
       options: {
-        laxcomma: true
+        laxcomma: true,
+        debug: true
       }
     }
   });
