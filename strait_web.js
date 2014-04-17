@@ -12,7 +12,6 @@ var App = express();
 
 App.engine("handlebars", exphbs({ defaultLayout: "application" }));
 
-App.set("config", config);
 App.set("views", __dirname + "/views");
 App.set("view engine", "handlebars");
 
