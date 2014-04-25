@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         files: "Gruntfile.js",
-        tasks: ["jshint:gruntfile"]
+        tasks: ["jshint:all"]
       },
       sources: {
         files: ["src/**/*.js"],
@@ -84,6 +84,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("init:dev", ["bower"]);
-  grunt.registerTask("server",   ["connect", "watch"]);
+  grunt.registerTask("compile",  ["jshint:all", "requirejs", "concat", "uglify"]);
+  grunt.registerTask("server",   ["compile", "connect", "watch"]);
   grunt.registerTask("tasks",    ["availabletasks"]);
 };
