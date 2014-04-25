@@ -1,0 +1,3 @@
+define(function(){
+  return {server: '10.0.0.115', user: 'bob', password: 'password'};
+})

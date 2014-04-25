@@ -1,0 +1,17 @@
+{
+  "name": "strait",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "requirejs": "~2.1.11"
+  },
+  "exportsOverride": {
+    "jquery": {
+      "javascripts": "jquery.js"
+    },
+    "requirejs": {
+      "javascripts": "require.js"
+    }
+  }
+}
